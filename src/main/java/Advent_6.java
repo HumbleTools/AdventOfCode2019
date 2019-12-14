@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class Advent_6 {
 
 	public static void main(final String... args) {
 
-		final Set<Orbiter> tempOrbiters = Arrays.stream(Const6.input_test.split("[\\r\\n]+"))
+		final Set<Orbiter> tempOrbiters = Arrays.stream(Const6.input_part1.split("[\\r\\n]+"))
 				.map(Orbiter::new)
 				.collect(Collectors.toSet());
 		final Set<Orbiter> allOrbiters = new HashSet<>(tempOrbiters);
@@ -30,11 +31,11 @@ public class Advent_6 {
 	}
 
 	private static Integer chainSizeFrom(final Orbiter orbiter) {
-		int size = 0;
-		Orbiter tempOrbiter = orbiter;
-		while (null != tempOrbiter.getCenter()) {
+		int size = 1;
+		Orbiter currentOrbiter = orbiter;
+		while (Objects.nonNull(currentOrbiter.getCenter())) {
 			size++;
-			tempOrbiter = tempOrbiter.getCenter();
+			currentOrbiter = currentOrbiter.getCenter();
 		}
 		return size;
 	}
