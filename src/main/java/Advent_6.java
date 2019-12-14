@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -17,7 +16,7 @@ public class Advent_6 {
 				.map(Orbiter::new)
 				.collect(Collectors.toSet());
 		final Set<Orbiter> allOrbiters = new HashSet<>(tempOrbiters);
-		final Orbiter origin = findCom(tempOrbiters);
+		final Orbiter origin = findOrigin(allOrbiters);
 		tempOrbiters.remove(origin);
 		buildMap(origin, tempOrbiters);
 		System.out.println(calculateOrbitSum(allOrbiters));
@@ -53,7 +52,7 @@ public class Advent_6 {
 		}
 	}
 
-	private static Orbiter findCom(final Set<Orbiter> orbiters) {
+	private static Orbiter findOrigin(final Set<Orbiter> orbiters) {
 		return orbiters.stream().filter(o -> o.getCenterName().equals("COM")).findFirst().get();
 	}
 
@@ -71,17 +70,6 @@ class Orbiter {
 		centerName = splitted[0];
 		name = splitted[1];
 		satellites = new ArrayList<>();
-	}
-
-	public static Orbiter findParent(final Orbiter orphan, final Set<Orbiter> orbiters) {
-		Orbiter result = null;
-		for (final Orbiter orbiter : orbiters) {
-			if (StringUtils.isNotBlank(orphan.name) && orbiter.name.equals(orphan.name)) {
-				result = orbiter;
-				break;
-			}
-		}
-		return result;
 	}
 
 	/**
