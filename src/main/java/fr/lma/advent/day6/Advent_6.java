@@ -1,13 +1,10 @@
-import java.util.ArrayList;
+package fr.lma.advent.day6;
+
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Advent_6 {
 
@@ -21,16 +18,27 @@ public class Advent_6 {
 		tempOrbiters.remove(origin);
 		buildMap(origin, tempOrbiters);
 		System.out.println(calculateOrbitSum(allOrbiters));
+
+		// TODO :
+		// Add some Gherkins <3
+		// create COM orbiter with null center
+		// rework findOrigin and chainSizeFrom
+		// code findSanta
+		// code findYou(refactorFindSanta)
+		// Get center of both
+		// find path of both until first common ancestor
+		// calculate number of jumps
+		// is it required to perform the jumps ?
 	}
 
-	private static int calculateOrbitSum(final Set<Orbiter> orbiters) {
+	public static int calculateOrbitSum(final Set<Orbiter> orbiters) {
 		return orbiters.stream()
 				.map(Advent_6::chainSizeFrom)
 				.mapToInt(Integer::intValue)
 				.sum();
 	}
 
-	private static Integer chainSizeFrom(final Orbiter orbiter) {
+	public static Integer chainSizeFrom(final Orbiter orbiter) {
 		int size = 1;
 		Orbiter currentOrbiter = orbiter;
 		while (Objects.nonNull(currentOrbiter.getCenter())) {
@@ -59,95 +67,7 @@ public class Advent_6 {
 
 }
 
-class Orbiter {
-
-	private Orbiter center;
-	private final String centerName;
-	private final String name;
-	private final List<Orbiter> satellites;
-
-	public Orbiter(final String value) {
-		final String[] splitted = value.split("\\)");
-		centerName = splitted[0];
-		name = splitted[1];
-		satellites = new ArrayList<>();
-	}
-
-	/**
-	 * @return the center
-	 */
-	public Orbiter getCenter() {
-		return center;
-	}
-
-	/**
-	 * @param center
-	 *            the center to set
-	 */
-	public void setCenter(final Orbiter center) {
-		this.center = center;
-	}
-
-	/**
-	 * @return the satellites
-	 */
-	public List<Orbiter> getSatellites() {
-		return satellites;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @return the centerName
-	 */
-	public String getCenterName() {
-		return centerName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(7, 31)
-				.append(centerName)
-				.append(name)
-				.toHashCode();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof Orbiter)) {
-			return false;
-		}
-		final Orbiter other = (Orbiter) obj;
-		return new EqualsBuilder()
-				.append(centerName, other.centerName)
-				.append(name, other.name)
-				.isEquals();
-	}
-
-}
-
-final class Const6 {
+class Const6 {
 
 	final static String input_test = "COM)B\r\n" +
 			"B)C\r\n" +
@@ -1432,5 +1352,5 @@ final class Const6 {
 			"49V)4BW\r\n" +
 			"Y3R)DJF\r\n" +
 			"4HL)641\r\n" +
-			"FYC)PGC\r\n";
+			"FYC)PGC\r\n"; // Expecting 245089
 }

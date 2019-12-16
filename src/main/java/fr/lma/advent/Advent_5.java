@@ -1,3 +1,4 @@
+package fr.lma.advent;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;

@@ -1,3 +1,4 @@
+package fr.lma.advent;
 import java.util.Arrays;
 
 public class Advent_2 {
