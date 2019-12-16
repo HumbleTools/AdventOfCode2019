@@ -5,13 +5,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.lma.util.Utils;
+import fr.lma.util.Utils;
 
 public class Advent_6 {
 
 	public static void main(final String... args) throws Exception {
 		final Set<Orbiter> tempOrbiters = Utils.getStringsInput("advent6/input_louisperso.txt")
-				.filter(str -> !str.startsWith("###"))
 				.map(Orbiter::new)
 				.collect(Collectors.toSet());
 		final Set<Orbiter> allOrbiters = new HashSet<>(tempOrbiters);
@@ -22,8 +21,6 @@ public class Advent_6 {
 
 		// TODO :
 		// Add some Gherkins <3
-		// create COM orbiter with null center
-		// rework findOrigin and chainSizeFrom
 		// code findSanta
 		// code findYou(refactorFindSanta)
 		// Get center of both
@@ -40,7 +37,7 @@ public class Advent_6 {
 	}
 
 	public static Integer chainSizeFrom(final Orbiter orbiter) {
-		int size = 1;
+		int size = 0;
 		Orbiter currentOrbiter = orbiter;
 		while (Objects.nonNull(currentOrbiter.getCenter())) {
 			size++;
@@ -63,7 +60,14 @@ public class Advent_6 {
 	}
 
 	private static Orbiter findOrigin(final Set<Orbiter> orbiters) {
-		return orbiters.stream().filter(o -> o.getCenterName().equals("COM")).findFirst().get();
+		final Orbiter origin = new Orbiter("COM", null);
+		orbiters.stream()
+				.filter(orb -> orb.getCenterName().equals("COM"))
+				.map(orb -> {
+					orb.setCenter(origin);
+					return orb;
+				}).close();
+		return origin;
 	}
 
 }

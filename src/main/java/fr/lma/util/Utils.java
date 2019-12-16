@@ -1,4 +1,4 @@
-package com.lma.util;
+package fr.lma.util;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
