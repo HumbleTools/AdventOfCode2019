@@ -9,15 +9,15 @@ import java.util.stream.Stream;
 
 public class Utils {
 
-    public static Stream<String> getStringsInput(final String filePath) {
-        Path path = null;
-        try {
-            path = Paths.get(Utils.class.getClassLoader()
-                    .getResource(filePath).toURI());
-            return Files.lines(path);
-        } catch (final URISyntaxException | IOException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
-    }
+	public static Stream<String> getStringsInput(final String filePath) {
+		Path path = null;
+		try {
+			path = Paths.get(Utils.class.getClassLoader()
+					.getResource(filePath).toURI());
+			return Files.lines(path).filter(str -> !str.startsWith("###"));
+		} catch (final URISyntaxException | IOException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+	}
 }
